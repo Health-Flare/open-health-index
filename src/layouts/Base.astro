@@ -1,0 +1,126 @@
+---
+interface Props {
+  title?: string;
+  description?: string;
+}
+const {
+  title,
+  description = 'Free and open-source health tools for people managing their own health, rated on privacy, platform and ease of setup.',
+} = Astro.props;
+const fullTitle = title ? `${title} · Open Health Index` : 'Open Health Index';
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <header class="site-header">
+      <div class="wrap">
+        <a class="brand" href="/">Open Health Index</a>
+        <nav aria-label="Main">
+          <a href="/">Browse</a>
+          <a href="/about/">About</a>
+          <a href="https://github.com/Health-Flare/open-health-index">Suggest a tool</a>
+        </nav>
+      </div>
+    </header>
+    <main id="main" class="wrap">
+      <slot />
+    </main>
+    <footer class="site-footer">
+      <div class="wrap">
+        <p>
+          Listing a tool is not a medical recommendation. Talk to your care team before changing how you manage your health.
+        </p>
+        <p>
+          Index content is <a href="https://creativecommons.org/publicdomain/zero/1.0/">CC0</a>. Site code is MIT.
+          <a href="https://github.com/Health-Flare/open-health-index">Source on GitHub</a>.
+        </p>
+      </div>
+    </footer>
+  </body>
+</html>
+
+<style is:global>
+  :root {
+    --bg: #fbfaf7;
+    --surface: #ffffff;
+    --text: #1f2522;
+    --muted: #5b6460;
+    --line: #e3e0d8;
+    --accent: #2f6b55;
+    --accent-soft: #e4efe9;
+    --warn-bg: #fff4e0;
+    --warn-text: #6b4300;
+    --warn-line: #f0c983;
+    --radius: 10px;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme='light']) {
+      --bg: #141816;
+      --surface: #1c211f;
+      --text: #e6ebe8;
+      --muted: #a0aaa5;
+      --line: #2f3633;
+      --accent: #7cc4a6;
+      --accent-soft: #22352d;
+      --warn-bg: #33270f;
+      --warn-text: #f3d39a;
+      --warn-line: #6b4f1c;
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme='dark'] {
+    --bg: #141816;
+    --surface: #1c211f;
+    --text: #e6ebe8;
+    --muted: #a0aaa5;
+    --line: #2f3633;
+    --accent: #7cc4a6;
+    --accent-soft: #22352d;
+    --warn-bg: #33270f;
+    --warn-text: #f3d39a;
+    --warn-line: #6b4f1c;
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--text);
+    font: 17px/1.6 system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  }
+  a { color: var(--accent); }
+  h1, h2, h3 { line-height: 1.25; }
+  .wrap { max-width: 64rem; margin: 0 auto; padding: 0 16px; }
+  .skip { position: absolute; left: -999px; }
+  .skip:focus { left: 16px; top: 8px; background: var(--surface); padding: 8px; }
+
+  .site-header { border-bottom: 1px solid var(--line); background: var(--surface); }
+  .site-header .wrap { display: flex; flex-wrap: wrap; gap: 8px 24px; align-items: center; justify-content: space-between; padding-top: 14px; padding-bottom: 14px; }
+  .brand { font-weight: 700; text-decoration: none; color: var(--text); }
+  .site-header nav { display: flex; gap: 18px; flex-wrap: wrap; }
+  .site-header nav a { text-decoration: none; }
+
+  main { padding-top: 32px; padding-bottom: 48px; }
+  .site-footer { border-top: 1px solid var(--line); color: var(--muted); font-size: 0.9rem; padding: 20px 0 32px; }
+
+  .muted { color: var(--muted); }
+  .tag {
+    display: inline-block; font-size: 0.8rem; padding: 2px 9px; border-radius: 999px;
+    background: var(--accent-soft); color: var(--text); white-space: nowrap;
+  }
+  .banner {
+    background: var(--warn-bg); color: var(--warn-text); border: 1px solid var(--warn-line);
+    border-radius: var(--radius); padding: 10px 14px; font-size: 0.92rem;
+  }
+</style>

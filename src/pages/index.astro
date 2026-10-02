@@ -1,0 +1,57 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import ToolCard from '../components/ToolCard.astro';
+import { CATEGORIES, type Category } from '../lib/labels';
+
+const tools = (await getCollection('tools', ({ data }) => data.status !== 'archived')).sort((a, b) =>
+  a.data.name.localeCompare(b.data.name),
+);
+
+const groups = (Object.keys(CATEGORIES) as Category[])
+  .map((key) => ({ key, ...CATEGORIES[key], tools: tools.filter((t) => t.data.category === key) }))
+  .filter((g) => g.tools.length > 0);
+---
+<Base>
+  <section class="intro">
+    <h1>Health tools you can trust with your data</h1>
+    <p>
+      Free and open-source apps for tracking symptoms, mood and medications, and for keeping your own records.
+      Every listing tells you where your data lives, whether you need an account, and how hard it is to set up.
+    </p>
+  </section>
+
+  <nav class="jump" aria-label="Categories">
+    {groups.map((g) => <a href={`#${g.key}`}>{g.label}</a>)}
+  </nav>
+
+  {
+    groups.map((g) => (
+      <section class="group" id={g.key}>
+        <h2>{g.label}</h2>
+        <p class="muted">{g.blurb}</p>
+        {g.tools.some((t) => t.data.safety_critical) && (
+          <p class="banner">
+            Some tools here can affect your treatment. They are built by patient communities and are not approved
+            medical devices. Talk to your care team before you use them.
+          </p>
+        )}
+        <div class="grid">
+          {g.tools.map((t) => (
+            <ToolCard tool={t} />
+          ))}
+        </div>
+      </section>
+    ))
+  }
+</Base>
+
+<style>
+  .intro h1 { font-size: clamp(1.7rem, 4vw, 2.4rem); margin: 0 0 12px; }
+  .intro p { max-width: 42rem; font-size: 1.08rem; margin: 0; }
+  .jump { display: flex; flex-wrap: wrap; gap: 8px 16px; margin: 28px 0 8px; font-size: 0.95rem; }
+  .group { margin-top: 40px; scroll-margin-top: 16px; }
+  .group h2 { margin: 0 0 4px; }
+  .group > p { margin: 0 0 14px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr)); gap: 14px; }
+</style>

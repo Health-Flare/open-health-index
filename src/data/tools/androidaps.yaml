@@ -1,0 +1,15 @@
+name: AndroidAPS
+summary: Community-built automated insulin delivery for Android. You build and configure it yourself, ideally with your care team.
+category: diabetes
+platforms: [android]
+setup: hard
+privacy:
+  data_location: mixed
+  account_required: false
+  works_offline: true
+license: AGPL-3.0-only
+links:
+  source: https://github.com/nightscout/AndroidAPS
+  website: https://androidaps.readthedocs.io/
+safety_critical: true
+reviewed_on: null

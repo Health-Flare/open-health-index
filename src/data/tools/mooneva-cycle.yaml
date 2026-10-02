@@ -1,0 +1,14 @@
+name: Mooneva Cycle
+summary: Period and cycle tracker that never connects to the internet, with no account and encrypted local storage.
+category: cycle
+platforms: [android, ios]
+setup: easy
+privacy:
+  data_location: device
+  account_required: false
+  works_offline: true
+license: GPL-3.0-or-later
+links:
+  source: https://github.com/aradar46/Mooneva-Cycle-Private-Period-Tracker
+reviewed_on: null
+notes: Maintained by one small company.

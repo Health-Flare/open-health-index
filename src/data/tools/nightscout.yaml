@@ -1,0 +1,15 @@
+name: Nightscout
+summary: Share live glucose readings from your CGM with family or caregivers through a site you host yourself.
+category: diabetes
+platforms: [self-hosted, web]
+setup: hard
+privacy:
+  data_location: self-hosted
+  account_required: false
+  works_offline: false
+license: AGPL-3.0-only
+links:
+  source: https://github.com/nightscout/cgm-remote-monitor
+  website: https://nightscout.github.io/
+safety_critical: true
+reviewed_on: null

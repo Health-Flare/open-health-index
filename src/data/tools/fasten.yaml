@@ -1,0 +1,14 @@
+name: Fasten
+summary: Gather your medical records from different providers into one private record for you or your family, on a server you control.
+category: records
+platforms: [self-hosted]
+setup: hard
+privacy:
+  data_location: self-hosted
+  account_required: false
+  works_offline: unknown
+license: GPL-3.0-only
+links:
+  source: https://github.com/fastenhealth/fasten-onprem
+reviewed_on: null
+notes: Connects to US patient-access APIs, so it does far less outside the US. A paid desktop edition also exists.

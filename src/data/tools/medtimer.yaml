@@ -1,0 +1,15 @@
+name: MedTimer
+summary: Medication reminders with a dose log you can export as CSV to show your doctor. Handles breaks, intervals and as-needed doses.
+category: medications
+platforms: [android]
+setup: easy
+privacy:
+  data_location: device
+  account_required: false
+  works_offline: true
+exports: [CSV, JSON]
+license: MIT
+links:
+  source: https://github.com/Futsch1/medTimer
+  fdroid: https://f-droid.org/packages/com.futsch1.medtimer/
+reviewed_on: null

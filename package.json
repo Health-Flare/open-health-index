@@ -1,0 +1,19 @@
+{
+  "name": "open-health-index",
+  "private": true,
+  "type": "module",
+  "description": "A people-first index of free and open-source health tools.",
+  "license": "MIT",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro sync && astro build"
+  },
+  "dependencies": {
+    "astro": "^7.3.5"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

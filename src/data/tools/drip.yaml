@@ -1,0 +1,16 @@
+name: drip.
+summary: Track your cycle, bleeding, pain and mood. Designed to be gender-inclusive, and everything stays on your phone.
+category: cycle
+platforms: [android, ios]
+setup: easy
+privacy:
+  data_location: device
+  account_required: false
+  works_offline: true
+exports: [CSV]
+license: GPL-3.0-only
+links:
+  source: https://gitlab.com/bloodyhealth/drip
+  website: https://bloodyhealth.gitlab.io/
+  fdroid: https://f-droid.org/packages/com.drip/
+reviewed_on: null

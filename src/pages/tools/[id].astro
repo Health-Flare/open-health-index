@@ -1,0 +1,80 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import { CATEGORIES, PLATFORMS, SETUP, DATA_LOCATION, STATUS } from '../../lib/labels';
+
+export async function getStaticPaths() {
+  const tools = await getCollection('tools');
+  return tools.map((tool) => ({ params: { id: tool.id }, props: { tool } }));
+}
+
+interface Props {
+  tool: CollectionEntry<'tools'>;
+}
+const { tool } = Astro.props;
+const d = tool.data;
+
+const yesNo = (v: boolean | 'unknown') => (v === 'unknown' ? 'Not yet checked' : v ? 'Yes' : 'No');
+const editUrl = `https://github.com/Health-Flare/open-health-index/edit/main/src/data/tools/${tool.id}.yaml`;
+const links = [
+  ['Source code', d.links.source],
+  ['Website', d.links.website],
+  ['F-Droid', d.links.fdroid],
+  ['Google Play', d.links.play],
+  ['App Store', d.links.appstore],
+].filter((l): l is [string, string] => Boolean(l[1]));
+---
+<Base title={d.name} description={d.summary}>
+  <p class="crumb"><a href={`/#${d.category}`}>{CATEGORIES[d.category].label}</a></p>
+  <h1>{d.name}</h1>
+  <p class="lede">{d.summary}</p>
+
+  {d.status !== 'active' && <p class="banner">Status: {STATUS[d.status]}.</p>}
+  {
+    d.safety_critical && (
+      <p class="banner">
+        This tool can affect your treatment. It is built by a patient community and is not an approved medical
+        device. Talk to your care team before you use it.
+      </p>
+    )
+  }
+  {d.affiliated && <p class="banner">Disclosure: this tool is made by the people who run this index.</p>}
+
+  <dl class="facts">
+    <dt>Works on</dt><dd>{d.platforms.map((p) => PLATFORMS[p]).join(', ')}</dd>
+    <dt>Setup</dt><dd>{SETUP[d.setup].label}: {SETUP[d.setup].detail}</dd>
+    <dt>Your data</dt><dd>{DATA_LOCATION[d.privacy.data_location]}</dd>
+    <dt>Account needed</dt><dd>{yesNo(d.privacy.account_required)}</dd>
+    <dt>Works offline</dt><dd>{yesNo(d.privacy.works_offline)}</dd>
+    <dt>Export</dt><dd>{d.exports.length ? d.exports.join(', ') : 'Not yet checked'}</dd>
+    <dt>License</dt><dd>{d.license ?? 'Not yet checked'}</dd>
+    <dt>Last reviewed</dt><dd>{d.reviewed_on ? d.reviewed_on.toISOString().slice(0, 10) : 'Not yet reviewed'}</dd>
+  </dl>
+
+  {d.notes && <p>{d.notes}</p>}
+
+  <h2>Links</h2>
+  <ul>
+    {links.map(([label, href]) => <li><a href={href}>{label}</a></li>)}
+  </ul>
+
+  <p class="muted small">Something wrong or out of date? <a href={editUrl}>Suggest a correction</a>.</p>
+</Base>
+
+<style>
+  .crumb { margin: 0 0 4px; font-size: 0.92rem; }
+  h1 { margin: 0 0 8px; }
+  .lede { font-size: 1.1rem; max-width: 42rem; margin: 0 0 20px; }
+  .banner { max-width: 42rem; margin: 0 0 12px; }
+  .facts {
+    display: grid; grid-template-columns: max-content 1fr; gap: 8px 20px; margin: 20px 0;
+    background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px 18px; max-width: 42rem;
+  }
+  dt { font-weight: 600; }
+  dd { margin: 0; }
+  @media (max-width: 480px) {
+    .facts { grid-template-columns: 1fr; gap: 2px; }
+    dd { margin-bottom: 8px; }
+  }
+  .small { font-size: 0.9rem; margin-top: 28px; }
+</style>

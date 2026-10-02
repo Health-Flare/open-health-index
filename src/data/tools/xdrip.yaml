@@ -1,0 +1,14 @@
+name: xDrip+
+summary: Read your CGM on your phone with customizable alerts for highs and lows.
+category: diabetes
+platforms: [android]
+setup: medium
+privacy:
+  data_location: mixed
+  account_required: false
+  works_offline: true
+license: GPL-3.0-only
+links:
+  source: https://github.com/NightscoutFoundation/xDrip
+safety_critical: true
+reviewed_on: null

@@ -1,0 +1,14 @@
+name: Trio
+summary: Community-built automated insulin delivery for iPhone, backed by the Nightscout Foundation. You build it from source.
+category: diabetes
+platforms: [ios]
+setup: hard
+privacy:
+  data_location: mixed
+  account_required: false
+  works_offline: true
+license: MIT
+links:
+  source: https://github.com/nightscout/Trio
+safety_critical: true
+reviewed_on: null

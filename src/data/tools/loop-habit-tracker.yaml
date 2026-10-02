@@ -1,0 +1,14 @@
+name: Loop Habit Tracker
+summary: Build and keep up daily habits, like stretching or taking a walk, with simple charts of your streaks.
+category: mood
+platforms: [android]
+setup: easy
+privacy:
+  data_location: device
+  account_required: false
+  works_offline: true
+exports: [CSV]
+license: GPL-3.0-or-later
+links:
+  source: https://github.com/iSoron/uhabits
+reviewed_on: null

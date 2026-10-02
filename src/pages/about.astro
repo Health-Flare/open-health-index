@@ -1,0 +1,54 @@
+---
+import Base from '../layouts/Base.astro';
+---
+<Base title="About" description="What the Open Health Index lists, how tools get in, and what a listing does and doesn't mean.">
+  <article class="prose">
+    <h1>About</h1>
+    <p>
+      The Open Health Index lists free and open-source tools for people looking after their own health: tracking
+      symptoms and flares, mood, medications and cycles, and keeping their own records. It's for patients,
+      caregivers and anyone who wants their health data to stay theirs.
+    </p>
+    <p>
+      Software for clinics, hospitals and health IT is out of scope. If that's what you need, try
+      <a href="https://github.com/kakoni/awesome-healthcare">awesome-healthcare</a>.
+    </p>
+
+    <h2>What gets listed</h2>
+    <ul>
+      <li>The source code is public under an OSI-approved open-source license.</li>
+      <li>The tool is useful to an individual, not only to a clinic or developer.</li>
+      <li>It has had a release or code change in the last 18 months, or is marked as watchlist or no longer maintained.</li>
+      <li>The parts you need to actually use it are open. Tools that are open source in name but lock the usable product behind a proprietary license aren't listed.</li>
+    </ul>
+
+    <h2>What a listing means</h2>
+    <p>
+      A listing means a tool meets the criteria above. It is not a medical recommendation, and it doesn't mean the
+      tool is safe or right for you. Some tools, especially the community-built insulin systems, can affect your
+      treatment. Talk to your care team before changing how you manage your health.
+    </p>
+    <p>
+      Facts we haven't confirmed are shown as <em>Not yet checked</em> rather than guessed.
+    </p>
+
+    <h2>Disclosure</h2>
+    <p>
+      This index is run by the people behind <a href="https://github.com/Health-Flare">Health-Flare</a>, who also make
+      health tracking apps. Our own tools are marked on their listings.
+    </p>
+
+    <h2>Contribute</h2>
+    <p>
+      Every listing is a small file in the
+      <a href="https://github.com/Health-Flare/open-health-index">GitHub repository</a>. You can suggest a tool or fix
+      a listing there without writing code.
+    </p>
+  </article>
+</Base>
+
+<style>
+  .prose { max-width: 42rem; }
+  .prose h1 { margin-top: 0; }
+  .prose h2 { margin-top: 32px; }
+</style>
