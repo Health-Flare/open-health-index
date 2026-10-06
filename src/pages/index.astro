@@ -2,6 +2,8 @@
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import ToolCard from '../components/ToolCard.astro';
+import ToolList from '../components/ToolList.astro';
+import FilterBar from '../components/FilterBar.astro';
 import { CATEGORIES, type Category } from '../lib/labels';
 
 const tools = (await getCollection('tools', ({ data }) => data.status !== 'archived')).sort((a, b) =>
@@ -21,30 +23,46 @@ const groups = (Object.keys(CATEGORIES) as Category[])
     </p>
   </section>
 
-  <nav class="jump" aria-label="Categories">
-    {groups.map((g) => <a href={`#${g.key}`}>{g.label}</a>)}
-  </nav>
+  <FilterBar categories={groups.map((g) => ({ key: g.key, label: g.label }))} total={tools.length} />
 
-  {
-    groups.map((g) => (
-      <section class="group" id={g.key}>
-        <h2>{g.label}</h2>
-        <p class="muted">{g.blurb}</p>
-        {g.tools.some((t) => t.data.safety_critical) && (
-          <p class="banner">
-            Some tools here can affect your treatment. They are built by patient communities and are not approved
-            medical devices. Talk to your care team before you use them.
-          </p>
-        )}
-        <div class="grid">
-          {g.tools.map((t) => (
-            <ToolCard tool={t} />
-          ))}
-        </div>
-      </section>
-    ))
-  }
+  <div id="cards-view">
+    <nav class="jump" aria-label="Categories">
+      {groups.map((g) => <a href={`#${g.key}`} data-jump={g.key}>{g.label}</a>)}
+    </nav>
+
+    {
+      groups.map((g) => (
+        <section class="group" id={g.key} data-group={g.key}>
+          <h2>{g.label}</h2>
+          <p class="muted">{g.blurb}</p>
+          {g.tools.some((t) => t.data.safety_critical) && (
+            <p class="banner">
+              Some tools here can affect your treatment. They are built by patient communities and are not approved
+              medical devices. Talk to your care team before you use them.
+            </p>
+          )}
+          <div class="grid">
+            {g.tools.map((t) => (
+              <ToolCard tool={t} />
+            ))}
+          </div>
+        </section>
+      ))
+    }
+  </div>
+
+  <ToolList tools={tools} />
+
+  <div id="no-results" class="empty" hidden>
+    <p><strong>No tools match these filters.</strong></p>
+    <p><button type="button" class="link-button" data-clear>Clear all filters</button></p>
+  </div>
 </Base>
+
+<script>
+  import { initFilters } from '../scripts/filters';
+  initFilters();
+</script>
 
 <style>
   .intro h1 { font-size: clamp(1.9rem, 4vw, 2.6rem); margin: 0 0 12px; }
@@ -62,4 +80,11 @@ const groups = (Object.keys(CATEGORIES) as Category[])
   .group h2 { margin: 0 0 4px; font-size: 1.4rem; }
   .group > p { margin: 0 0 14px; }
   .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr)); gap: 14px; }
+
+  .empty { margin-top: 28px; padding: 28px 18px; text-align: center; border: 1px dashed var(--line); border-radius: var(--radius); }
+  .empty p { margin: 0 0 6px; }
+  .link-button {
+    font: inherit; color: var(--link); background: none; border: 0; padding: 0; cursor: pointer;
+    text-decoration: underline; text-underline-offset: 3px;
+  }
 </style>

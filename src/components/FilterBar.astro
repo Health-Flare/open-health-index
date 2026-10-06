@@ -1,0 +1,141 @@
+---
+import { PLATFORMS, DATA_LOCATION } from '../lib/labels';
+
+interface Props {
+  categories: { key: string; label: string }[];
+  total: number;
+}
+const { categories, total } = Astro.props;
+---
+<!-- Hidden until the script runs. Without JavaScript the page is the full grouped list. -->
+<form id="filters" class="filters" aria-label="Filter tools" hidden>
+  <div class="top">
+    <div class="view" role="group" aria-label="Display as">
+      <button type="button" data-view="cards" aria-pressed="true">Cards</button>
+      <button type="button" data-view="list" aria-pressed="false">List</button>
+    </div>
+    <p class="count" role="status" aria-live="polite" aria-atomic="true">
+      Showing <span data-count>{total}</span> of {total} tools
+    </p>
+  </div>
+
+  <details class="more" open>
+    <summary>Filters <span class="active" data-active hidden></span></summary>
+  <div class="fields">
+    <label class="field">
+      <span class="legend">Category</span>
+      <select name="category">
+        <option value="">All categories</option>
+        {categories.map((c) => <option value={c.key}>{c.label}</option>)}
+      </select>
+    </label>
+
+    <label class="field">
+      <span class="legend">Setup</span>
+      <select name="setup">
+        <option value="">Any</option>
+        <option value="easy">Easy only</option>
+        <option value="medium">Easy or medium</option>
+      </select>
+    </label>
+
+    <fieldset class="field">
+      <legend class="legend">Works on</legend>
+      <div class="chips">
+        {
+          Object.entries(PLATFORMS).map(([value, label]) => (
+            <label class="chip">
+              <input type="checkbox" name="platform" value={value} />
+              <span>{label}</span>
+            </label>
+          ))
+        }
+      </div>
+    </fieldset>
+
+    <fieldset class="field">
+      <legend class="legend">Your data</legend>
+      <div class="chips">
+        {
+          Object.entries(DATA_LOCATION).map(([value, label]) => (
+            <label class="chip">
+              <input type="checkbox" name="data" value={value} />
+              <span>{label}</span>
+            </label>
+          ))
+        }
+      </div>
+    </fieldset>
+
+    <fieldset class="field">
+      <legend class="legend">Must have</legend>
+      <div class="chips">
+        <label class="chip"><input type="checkbox" name="account" value="no" /><span>No account needed</span></label>
+        <label class="chip"><input type="checkbox" name="offline" value="yes" /><span>Works offline</span></label>
+      </div>
+    </fieldset>
+  </div>
+
+  <p class="hint muted">“Not checked yet” never counts as a yes.</p>
+  </details>
+  <button type="button" class="clear" data-clear hidden>Clear filters</button>
+</form>
+
+<style>
+  .filters {
+    margin: 28px 0 0; padding: 16px 18px; background: var(--surface);
+    border: 1px solid var(--line); border-radius: var(--radius);
+    display: flex; flex-direction: column; gap: 14px;
+  }
+  .top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 16px; }
+  .view { display: inline-flex; border: 1px solid var(--line); border-radius: 100px; padding: 3px; gap: 2px; }
+  .view button {
+    font: inherit; font-size: 0.85rem; font-weight: 500; color: var(--text); background: none;
+    border: 0; border-radius: 100px; padding: 0.3rem 0.95rem; cursor: pointer;
+  }
+  .view button[aria-pressed='true'] { background: var(--accent); color: var(--accent-text); }
+  .count { margin: 0; font-family: 'DM Mono', monospace; font-size: 0.82rem; color: var(--muted); }
+
+  .fields { display: flex; flex-wrap: wrap; gap: 14px 22px; }
+  .field { border: 0; margin: 0; padding: 0; min-width: 0; display: flex; flex-direction: column; gap: 6px; }
+  .legend {
+    padding: 0; font-family: 'DM Mono', monospace; font-size: 0.75rem; font-weight: 500;
+    color: var(--muted); text-transform: uppercase; letter-spacing: 0.04em;
+  }
+  select {
+    font: inherit; font-size: 0.9rem; color: var(--text); background: var(--bg);
+    border: 1px solid var(--line); border-radius: 8px; padding: 0.35rem 0.6rem; min-height: 2.1rem;
+  }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; }
+  .chip { position: relative; display: inline-flex; cursor: pointer; }
+  .chip input { position: absolute; opacity: 0; inset: 0; margin: 0; cursor: pointer; }
+  .chip span {
+    font-size: 0.85rem; padding: 0.3rem 0.8rem; border-radius: 100px;
+    border: 1px solid var(--line); background: var(--bg); color: var(--text);
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .chip input:checked + span { background: var(--accent); border-color: var(--accent); color: var(--accent-text); font-weight: 500; }
+  .chip input:checked + span::before { content: '✓ '; }
+  .chip:hover span { border-color: var(--accent); }
+
+  .view button:focus-visible, select:focus-visible, .chip input:focus-visible + span, .clear:focus-visible {
+    outline: 2px solid var(--text); outline-offset: 2px;
+  }
+
+  .more[open] > summary { margin-bottom: 12px; }
+  summary {
+    cursor: pointer; width: fit-content; font-weight: 500; font-size: 0.92rem;
+    border-radius: 6px; padding: 2px 0;
+  }
+  summary:focus-visible { outline: 2px solid var(--text); outline-offset: 2px; }
+  .active {
+    margin-left: 4px; font-family: 'DM Mono', monospace; font-size: 0.75rem;
+    padding: 1px 8px; border-radius: 100px; background: var(--accent); color: var(--accent-text);
+  }
+  .hint { margin: 14px 0 0; font-size: 0.82rem; }
+  .clear {
+    align-self: flex-start; font: inherit; font-size: 0.88rem; color: var(--link); background: none; border: 0; padding: 0;
+    cursor: pointer; text-decoration: underline; text-underline-offset: 3px;
+  }
+</style>
