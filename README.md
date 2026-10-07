@@ -30,6 +30,7 @@ Requires Node 22+.
 npm install
 npm run dev      # http://localhost:4321
 npm run build    # validates every entry and builds to dist/
+npm test         # unit tests for the index page filters
 ```
 
 ## Licensing

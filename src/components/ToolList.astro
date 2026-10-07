@@ -1,0 +1,99 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import { CATEGORIES, PLATFORMS, SETUP, DATA_LOCATION } from '../lib/labels';
+import { filterAttrs } from '../lib/tool-attrs';
+
+interface Props {
+  tools: CollectionEntry<'tools'>[];
+}
+const { tools } = Astro.props;
+
+const ACCOUNT = { false: 'Not needed', true: 'Needed', unknown: 'Not checked' } as const;
+const OFFLINE = { true: 'Yes', false: 'No', unknown: 'Not checked' } as const;
+const key = (v: boolean | 'unknown') => String(v) as 'true' | 'false' | 'unknown';
+---
+<section id="list-view" aria-label="All tools as a list" hidden>
+  {
+    tools.some((t) => t.data.safety_critical) && (
+      <p class="banner" data-safety-banner>
+        Tools marked “Affects treatment” are built by patient communities and are not approved medical devices. Talk
+        to your care team before you use them.
+      </p>
+    )
+  }
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th scope="col" aria-sort="ascending"><button type="button" data-sort="name">Tool</button></th>
+          <th scope="col" aria-sort="none"><button type="button" data-sort="category">Category</button></th>
+          <th scope="col">Works on</th>
+          <th scope="col">Setup</th>
+          <th scope="col">Your data</th>
+          <th scope="col">Account</th>
+          <th scope="col">Offline</th>
+        </tr>
+      </thead>
+      <tbody>
+        {
+          tools.map((tool) => {
+            const d = tool.data;
+            return (
+              <tr {...filterAttrs(tool)}>
+                <th scope="row">
+                  <a href={`/tools/${tool.id}/`}>{d.name}</a>
+                  {d.safety_critical && <span class="flag">Affects treatment</span>}
+                </th>
+                <td data-label="Category">{CATEGORIES[d.category].label}</td>
+                <td data-label="Works on">{d.platforms.map((p) => PLATFORMS[p]).join(', ')}</td>
+                <td data-label="Setup" title={SETUP[d.setup].detail}>{SETUP[d.setup].label}</td>
+                <td data-label="Your data">{DATA_LOCATION[d.privacy.data_location]}</td>
+                <td data-label="Account">{ACCOUNT[key(d.privacy.account_required)]}</td>
+                <td data-label="Offline">{OFFLINE[key(d.privacy.works_offline)]}</td>
+              </tr>
+            );
+          })
+        }
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<style>
+  #list-view { margin-top: 28px; }
+  .banner { margin: 0 0 14px; }
+  .table-wrap { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+  th, td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+  tbody tr:last-child > * { border-bottom: 0; }
+  thead th {
+    font-family: 'DM Mono', monospace; font-size: 0.78rem; font-weight: 500; color: var(--muted);
+    white-space: nowrap; background: var(--accent-soft);
+  }
+  thead button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+  thead button::after { content: ' ↕'; opacity: 0.45; }
+  th[aria-sort='ascending'] button::after { content: ' ↑'; opacity: 1; }
+  th[aria-sort='descending'] button::after { content: ' ↓'; opacity: 1; }
+  thead button:focus-visible { outline: 2px solid var(--text); outline-offset: 2px; border-radius: 3px; }
+  tbody th { font-weight: 600; }
+  tbody th a { color: var(--text); text-decoration: none; }
+  tbody th a:hover { color: var(--link); text-decoration: underline; text-underline-offset: 3px; }
+  tbody tr:hover { background: color-mix(in srgb, var(--accent-soft) 50%, transparent); }
+  .flag {
+    display: inline-block; margin-left: 6px; font-family: 'DM Mono', monospace; font-size: 0.7rem; font-weight: 500;
+    padding: 1px 8px; border-radius: 999px; background: var(--warn-bg); color: var(--warn-text);
+    border: 1px solid var(--warn-line); white-space: nowrap; vertical-align: 1px;
+  }
+
+  /* Narrow screens: each row becomes a small labelled block. */
+  @media (max-width: 720px) {
+    thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+    table, tbody, tr, th, td { display: block; }
+    tbody tr { padding: 12px 14px; border-bottom: 1px solid var(--line); }
+    tbody tr:last-child { border-bottom: 0; }
+    tbody th, tbody td { border: 0; padding: 2px 0; }
+    tbody th { font-size: 1rem; margin-bottom: 4px; }
+    tbody td { display: grid; grid-template-columns: 6.5rem 1fr; gap: 8px; }
+    tbody td::before { content: attr(data-label); font-family: 'DM Mono', monospace; font-size: 0.78rem; color: var(--muted); }
+  }
+</style>

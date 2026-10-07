@@ -23,6 +23,7 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
+      - run: npm test
       # Fails if any entry in src/data/tools/ doesn't match the schema.
       - run: npm run build
       - if: github.event_name != 'pull_request'
