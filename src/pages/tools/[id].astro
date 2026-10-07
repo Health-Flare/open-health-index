@@ -1,5 +1,7 @@
 ---
 import { getCollection, type CollectionEntry } from 'astro:content';
+import { Image } from 'astro:assets';
+import { screenshotUrls } from '../../lib/screenshots';
 import Base from '../../layouts/Base.astro';
 import { CATEGORIES, PLATFORMS, SETUP, DATA_LOCATION, STATUS } from '../../lib/labels';
 import { breadcrumbList, categoryPath, softwareApplication } from '../../lib/structured-data';
@@ -24,7 +26,8 @@ const links = [
   ['Google Play', d.links.play],
   ['App Store', d.links.appstore],
 ].filter((l): l is [string, string] => Boolean(l[1]));
-const jsonLd = [softwareApplication(tool, Astro.site!), breadcrumbList(tool, Astro.site!)];
+const images = await screenshotUrls(d.screenshots, Astro.site!);
+const jsonLd = [softwareApplication(tool, Astro.site!, images), breadcrumbList(tool, Astro.site!)];
 ---
 <Base title={d.name} description={d.summary} jsonLd={jsonLd}>
   <nav class="crumb" aria-label="Breadcrumb">
@@ -58,6 +61,34 @@ const jsonLd = [softwareApplication(tool, Astro.site!), breadcrumbList(tool, Ast
 
   {d.notes && <p>{d.notes}</p>}
 
+  {
+    d.screenshots.length > 0 && (
+      <section class="shots" aria-label="Screenshots">
+        <div class="shot-row">
+          {d.screenshots.map((s) => (
+            <figure>
+              <Image
+                src={s.file}
+                alt={s.alt}
+                widths={[240, 480]}
+                sizes="240px"
+                format="webp"
+                loading="lazy"
+                decoding="async"
+              />
+              <figcaption>
+                <a href={s.source}>Source</a> · {s.license}
+              </figcaption>
+            </figure>
+          ))}
+        </div>
+        <p class="muted small credit">
+          Screenshots from the {d.name} project, under their own license as shown. Not covered by this index's CC0.
+        </p>
+      </section>
+    )
+  }
+
   <h2>Links</h2>
   <ul>
     {links.map(([label, href]) => <li><a href={href}>{label}</a></li>)}
@@ -85,5 +116,14 @@ const jsonLd = [softwareApplication(tool, Astro.site!), breadcrumbList(tool, Ast
     dd { margin-bottom: 8px; }
   }
   h2 { font-size: 1.3rem; margin-top: 28px; }
+  .shots { margin: 24px 0 8px; }
+  .shot-row { display: flex; gap: 14px; overflow-x: auto; padding-bottom: 6px; }
+  figure { margin: 0; flex: 0 0 auto; width: 240px; }
+  figure img {
+    display: block; width: 240px; height: auto; border-radius: var(--radius);
+    border: 1px solid var(--line); background: var(--surface);
+  }
+  figcaption { font-size: 0.82rem; color: var(--muted); margin-top: 6px; }
+  .credit { margin-top: 8px !important; }
   .small { font-size: 0.9rem; margin-top: 28px; color: var(--muted); }
 </style>
