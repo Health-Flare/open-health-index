@@ -12,6 +12,7 @@ interface Props {
 const { title, description = SITE_DESCRIPTION, jsonLd = [], ogType = 'website' } = Astro.props;
 const fullTitle = title ? `${title} · ${SITE_NAME}` : SITE_NAME;
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
+const ogImage = new URL('/og-image.png', Astro.site).href;
 ---
 <!doctype html>
 <html lang="en">
@@ -22,6 +23,9 @@ const canonical = new URL(Astro.url.pathname, Astro.site).href;
     <meta name="description" content={description} />
     <meta name="theme-color" content="#2C2825" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/icon-192.png" type="image/png" sizes="192x192" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
     <link rel="canonical" href={canonical} />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <link rel="alternate" type="application/json" href="/tools.json" title="Open Health Index data (CC0)" />
@@ -31,7 +35,11 @@ const canonical = new URL(Astro.url.pathname, Astro.site).href;
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:locale" content="en" />
-    <meta name="twitter:card" content="summary" />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Open Health Index logo: an amber plus inside an open coral ring" />
+    <meta name="twitter:card" content="summary_large_image" />
     {jsonLd.map((data) => <script type="application/ld+json" set:html={serialize(data)} />)}
   </head>
   <body>
@@ -39,7 +47,7 @@ const canonical = new URL(Astro.url.pathname, Astro.site).href;
     <header class="site-header">
       <div class="wrap">
         <div class="brand-group">
-          <a class="brand" href="/">Open Health Index</a>
+          <a class="brand" href="/"><img src="/favicon.svg" width="32" height="32" alt="" />Open Health Index</a>
           <a class="family-tag" href="https://healthflare.org" target="_blank" rel="noopener">Part of the Health Flare family</a>
         </div>
         <nav aria-label="Main">
@@ -168,7 +176,9 @@ const canonical = new URL(Astro.url.pathname, Astro.site).href;
   .brand {
     font-family: 'Fraunces', Georgia, serif; font-weight: 600; font-size: 1.1rem;
     letter-spacing: -0.01em; text-decoration: none; color: var(--text);
+    display: inline-flex; align-items: center; gap: 0.55rem;
   }
+  .brand img { display: block; width: 32px; height: 32px; }
   .family-tag {
     font-size: 0.8rem; color: var(--muted); text-decoration: none;
     padding-left: 0.85rem; border-left: 1px solid var(--line);
