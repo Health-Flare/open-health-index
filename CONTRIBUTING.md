@@ -43,6 +43,11 @@ safety_critical: false       # optional: true if it can affect treatment, e.g. i
 affiliated: false            # optional: true if made by the people who run this index
 reviewed_on: 2026-10-01      # date you checked every field, or null
 notes: Optional, up to 280 characters.
+screenshots:                 # optional, up to 4. The first one is shown on the card.
+  - file: ../../assets/tools/medtimer/main.png
+    alt: What the screen shows, in your own words
+    source: https://...      # where you got the image, e.g. the repo's fastlane folder
+    license: MIT             # the license the image is under
 ```
 
 ### Rules
@@ -51,6 +56,7 @@ notes: Optional, up to 280 characters.
 - **Don't guess.** If you can't confirm something, use `unknown` or `null`. The site shows these as "Not yet checked", which is more useful than a wrong answer.
 - **Use plain language.** The audience is patients and caregivers. Say "stays on your phone", not "local-first persistence".
 - **Mark anything that can change treatment** with `safety_critical: true`.
+- **Screenshots come from the project's own repository** (fastlane metadata, a `screenshots/` folder, the README), never from an app store listing. Put them in `src/assets/tools/<id>/`. They aren't CC0, so `source` and `license` are required, and the build fails without them. Don't hotlink.
 
 ## Corrections
 
@@ -58,4 +64,4 @@ Every tool page has a "Suggest a correction" link that opens the file for editin
 
 ## Licensing of contributions
 
-By contributing, you agree that content under `src/data/` is released under [CC0 1.0](LICENSE-CONTENT) and code under [MIT](LICENSE).
+By contributing, you agree that content under `src/data/` is released under [CC0 1.0](LICENSE-CONTENT) and code under [MIT](LICENSE). Screenshots under `src/assets/tools/` stay under their own projects' licenses.
