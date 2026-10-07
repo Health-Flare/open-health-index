@@ -1,13 +1,17 @@
 ---
+import { SITE_DESCRIPTION, SITE_NAME, serialize } from '../lib/structured-data';
+
 interface Props {
   title?: string;
   description?: string;
+  /** schema.org objects, each rendered as its own JSON-LD block. Build them in src/lib/structured-data.ts. */
+  jsonLd?: Record<string, unknown>[];
+  /** Open Graph type. Defaults to "website". */
+  ogType?: string;
 }
-const {
-  title,
-  description = 'Free and open-source health tools for people managing their own health, rated on privacy, platform and ease of setup.',
-} = Astro.props;
-const fullTitle = title ? `${title} · Open Health Index` : 'Open Health Index';
+const { title, description = SITE_DESCRIPTION, jsonLd = [], ogType = 'website' } = Astro.props;
+const fullTitle = title ? `${title} · ${SITE_NAME}` : SITE_NAME;
+const canonical = new URL(Astro.url.pathname, Astro.site).href;
 ---
 <!doctype html>
 <html lang="en">
@@ -18,7 +22,17 @@ const fullTitle = title ? `${title} · Open Health Index` : 'Open Health Index';
     <meta name="description" content={description} />
     <meta name="theme-color" content="#2C2825" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
-    <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+    <link rel="canonical" href={canonical} />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="alternate" type="application/json" href="/tools.json" title="Open Health Index data (CC0)" />
+    <meta property="og:site_name" content={SITE_NAME} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:title" content={title ?? SITE_NAME} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content="en" />
+    <meta name="twitter:card" content="summary" />
+    {jsonLd.map((data) => <script type="application/ld+json" set:html={serialize(data)} />)}
   </head>
   <body>
     <a class="skip" href="#main">Skip to content</a>

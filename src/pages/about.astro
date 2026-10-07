@@ -1,7 +1,12 @@
 ---
 import Base from '../layouts/Base.astro';
+import { CC0, DATASET_PATH, dataset } from '../lib/structured-data';
 ---
-<Base title="About" description="What the Open Health Index lists, how tools get in, and what a listing does and doesn't mean.">
+<Base
+  title="About"
+  description="What the Open Health Index lists, how tools get in, and what a listing does and doesn't mean."
+  jsonLd={[dataset(Astro.site!)]}
+>
   <article class="prose">
     <h1>About</h1>
     <p>
@@ -36,6 +41,13 @@ import Base from '../layouts/Base.astro';
     <p>
       This index is run by the people behind <a href="https://github.com/Health-Flare">Health-Flare</a>, who also make
       health tracking apps. Our own tools are marked on their listings.
+    </p>
+
+    <h2>Open data</h2>
+    <p>
+      The whole index is free to reuse under <a href={CC0}>CC0</a>, no permission or credit needed. Download every
+      listing as one file: <a href={DATASET_PATH}><code>{DATASET_PATH}</code></a>. Fields match the ones described in the
+      <a href="https://github.com/Health-Flare/open-health-index/blob/main/CONTRIBUTING.md#fields">contributing guide</a>.
     </p>
 
     <h2>Contribute</h2>

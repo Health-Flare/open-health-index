@@ -5,6 +5,7 @@ import ToolCard from '../components/ToolCard.astro';
 import ToolList from '../components/ToolList.astro';
 import FilterBar from '../components/FilterBar.astro';
 import { CATEGORIES, type Category } from '../lib/labels';
+import { itemList, webSite } from '../lib/structured-data';
 
 const tools = (await getCollection('tools', ({ data }) => data.status !== 'archived')).sort((a, b) =>
   a.data.name.localeCompare(b.data.name),
@@ -13,8 +14,11 @@ const tools = (await getCollection('tools', ({ data }) => data.status !== 'archi
 const groups = (Object.keys(CATEGORIES) as Category[])
   .map((key) => ({ key, ...CATEGORIES[key], tools: tools.filter((t) => t.data.category === key) }))
   .filter((g) => g.tools.length > 0);
+
+// Same order the cards appear in.
+const jsonLd = [webSite(Astro.site!), itemList(groups.flatMap((g) => g.tools), Astro.site!)];
 ---
-<Base>
+<Base jsonLd={jsonLd}>
   <section class="intro">
     <h1>Health tools you can trust with your data</h1>
     <p>

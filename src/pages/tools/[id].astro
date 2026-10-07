@@ -2,6 +2,7 @@
 import { getCollection, type CollectionEntry } from 'astro:content';
 import Base from '../../layouts/Base.astro';
 import { CATEGORIES, PLATFORMS, SETUP, DATA_LOCATION, STATUS } from '../../lib/labels';
+import { breadcrumbList, categoryPath, softwareApplication } from '../../lib/structured-data';
 
 export async function getStaticPaths() {
   const tools = await getCollection('tools');
@@ -23,9 +24,13 @@ const links = [
   ['Google Play', d.links.play],
   ['App Store', d.links.appstore],
 ].filter((l): l is [string, string] => Boolean(l[1]));
+const jsonLd = [softwareApplication(tool, Astro.site!), breadcrumbList(tool, Astro.site!)];
 ---
-<Base title={d.name} description={d.summary}>
-  <p class="crumb"><a href={`/#${d.category}`}>{CATEGORIES[d.category].label}</a></p>
+<Base title={d.name} description={d.summary} jsonLd={jsonLd}>
+  <nav class="crumb" aria-label="Breadcrumb">
+    <a href="/">Home</a> <span aria-hidden="true">›</span>
+    <a href={categoryPath(d.category)}>{CATEGORIES[d.category].label}</a>
+  </nav>
   <h1>{d.name}</h1>
   <p class="lede">{d.summary}</p>
 
@@ -65,6 +70,7 @@ const links = [
   .crumb { margin: 0 0 4px; font-size: 0.92rem; }
   .crumb a { color: var(--muted); text-decoration: none; }
   .crumb a:hover { color: var(--link); text-decoration: underline; text-underline-offset: 3px; }
+  .crumb span { color: var(--muted); margin: 0 4px; }
   h1 { margin: 0 0 8px; font-size: clamp(1.9rem, 4vw, 2.4rem); }
   .lede { font-size: 1.1rem; max-width: 42rem; margin: 0 0 20px; color: var(--muted); }
   .banner { max-width: 42rem; margin: 0 0 12px; }
