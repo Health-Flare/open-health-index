@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from 'astro:content';
+import { Image } from 'astro:assets';
 import { PLATFORMS, SETUP, DATA_LOCATION } from '../lib/labels';
 import { filterAttrs } from '../lib/tool-attrs';
 
@@ -8,8 +9,25 @@ interface Props {
 }
 const { tool } = Astro.props;
 const d = tool.data;
+const shot = d.screenshots[0];
 ---
 <article class="card" {...filterAttrs(tool)}>
+  {
+    shot ? (
+      <Image
+        class="shot"
+        src={shot.file}
+        alt={shot.alt}
+        widths={[360, 720]}
+        sizes="(max-width: 640px) calc(100vw - 70px), 340px"
+        format="webp"
+        loading="lazy"
+        decoding="async"
+      />
+    ) : (
+      <div class="shot placeholder" data-category={d.category} aria-hidden="true" />
+    )
+  }
   <h3><a href={`/tools/${tool.id}/`}>{d.name}</a></h3>
   <p class="summary">{d.summary}</p>
   <ul class="facts" aria-label="Key facts">
@@ -28,6 +46,21 @@ const d = tool.data;
   }
   .card:hover { border-color: var(--accent); box-shadow: 0 2px 14px rgba(44, 40, 37, 0.08); }
   h3 { margin: 0; font-size: 1.1rem; }
+  /* Phone screenshots are tall. Show the top of the screen in a fixed frame so cards line up. */
+  .shot {
+    display: block; width: calc(100% + 36px); height: auto; aspect-ratio: 16 / 10;
+    margin: -16px -18px 4px; object-fit: cover; object-position: top;
+    border-radius: var(--radius) var(--radius) 0 0; border-bottom: 1px solid var(--line);
+    background: var(--accent-soft);
+  }
+  .placeholder { background: var(--accent-soft); }
+  .placeholder[data-category='symptoms'] { background: color-mix(in srgb, #F07560 18%, var(--surface)); }
+  .placeholder[data-category='mood'] { background: color-mix(in srgb, #8E7CC3 18%, var(--surface)); }
+  .placeholder[data-category='medications'] { background: color-mix(in srgb, #5BA4CF 18%, var(--surface)); }
+  .placeholder[data-category='cycle'] { background: color-mix(in srgb, #E07A9B 18%, var(--surface)); }
+  .placeholder[data-category='diabetes'] { background: color-mix(in srgb, #4FA88A 18%, var(--surface)); }
+  .placeholder[data-category='records'] { background: color-mix(in srgb, #A68A64 18%, var(--surface)); }
+  .placeholder[data-category='body'] { background: color-mix(in srgb, #F5A623 18%, var(--surface)); }
   h3 a { color: var(--text); text-decoration: none; }
   h3 a:hover { color: var(--link); text-decoration: underline; text-underline-offset: 3px; }
   .summary { margin: 0; }

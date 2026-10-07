@@ -67,7 +67,7 @@ export function spdxUrl(id: string): string {
 }
 
 /** Tool page: SoftwareApplication (or Mobile/WebApplication). */
-export function softwareApplication(tool: ToolEntry, site: string | URL): JsonLd {
+export function softwareApplication(tool: ToolEntry, site: string | URL, images: readonly string[] = []): JsonLd {
   const d = tool.data;
   const url = abs(site, toolPath(tool.id));
   const os = [...new Set(d.platforms.map((p) => OS[p]).filter((v): v is string => Boolean(v)))];
@@ -90,6 +90,7 @@ export function softwareApplication(tool: ToolEntry, site: string | URL): JsonLd
   };
   if (os.length) out.operatingSystem = os.join(', ');
   if (d.license) out.license = spdxUrl(d.license);
+  if (images.length) out.screenshot = [...images];
   return out;
 }
 

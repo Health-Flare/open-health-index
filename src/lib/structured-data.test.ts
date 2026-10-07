@@ -52,6 +52,12 @@ test('tool page describes the app', () => {
   ]);
 });
 
+test('screenshots become schema.org screenshot URLs, and are omitted when there are none', () => {
+  const urls = ['https://openhealthindex.org/_astro/main.abc.webp'];
+  assert.deepEqual(softwareApplication(medtimer, SITE, urls).screenshot, urls);
+  assert.equal('screenshot' in softwareApplication(medtimer, SITE), false);
+});
+
 test('unconfirmed license is left out', () => {
   const ld = softwareApplication(tool({ license: null }), SITE);
   assert.equal('license' in ld, false);
