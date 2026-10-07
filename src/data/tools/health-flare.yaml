@@ -1,0 +1,32 @@
+name: Health Flare
+summary: A private health journal for chronic illness. Log symptoms, vitals, medications, meals and sleep, for yourself or someone you care for.
+category: symptoms
+platforms: [android, ios]
+setup: easy
+privacy:
+  data_location: device
+  account_required: false
+  works_offline: true
+exports: [PDF, CSV]
+license: GPL-3.0-or-later
+links:
+  source: https://github.com/Health-Flare/app
+  website: https://healthflare.org
+  play: https://play.google.com/store/apps/details?id=org.healthflare.app.healthflare
+  appstore: https://apps.apple.com/app/health-flare/id6803123766
+affiliated: true
+reviewed_on: 2026-10-07
+notes: Tracks more than one person, each in a separate profile. Optional weather capture sends your location to Open-Meteo; it's off by default and the location isn't stored.
+screenshots:
+  - file: ../../assets/tools/health-flare/dashboard.png
+    alt: Dashboard for a sample profile, with prompts to log a flare or check in, an upcoming appointment and recent sleep and journal entries
+    source: https://github.com/Health-Flare/app/tree/main/screenshots/playstore/phone
+    license: GPL-3.0-or-later
+  - file: ../../assets/tools/health-flare/tracking-symptoms.png
+    alt: Symptoms tab listing fatigue, joint pain and brain fog, each with a severity score and the time it was logged
+    source: https://github.com/Health-Flare/app/tree/main/screenshots/playstore/phone
+    license: GPL-3.0-or-later
+  - file: ../../assets/tools/health-flare/journal.png
+    alt: Journal entries grouped by month, each with a mood, a short note and the weather at the time
+    source: https://github.com/Health-Flare/app/tree/main/screenshots/playstore/phone
+    license: GPL-3.0-or-later
