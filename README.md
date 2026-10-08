@@ -37,6 +37,7 @@ npm test         # unit tests for the index page filters
 
 - **Index content** (`src/data/`): [CC0 1.0](LICENSE-CONTENT). Reuse it however you like.
 - **Site code**: [MIT](LICENSE).
+- **Screenshots** (`src/assets/tools/`): **not CC0.** They show each project's own interface and are used under that project's license. Every screenshot's source and license is recorded in its tool's YAML file and shown under the image on the site.
 
 ## Disclosure
 

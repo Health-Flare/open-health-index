@@ -12,7 +12,7 @@ const keys = <T extends Record<string, unknown>>(o: T) =>
 
 const tools = defineCollection({
   loader: glob({ pattern: '**/*.yaml', base: './src/data/tools' }),
-  schema: z
+  schema: ({ image }) => z
     .object({
       name: z.string().min(1),
       // Written in our own words. Never paste store or README descriptions.
@@ -47,6 +47,23 @@ const tools = defineCollection({
       // Date a human last checked every field against the source. null = unreviewed.
       reviewed_on: z.coerce.date().nullable(),
       notes: z.string().max(280).optional(),
+
+      // Screenshots are NOT CC0. Each one carries its own source and license.
+      // `file` is relative to this YAML file: ../../assets/tools/<id>/<name>.png
+      screenshots: z
+        .array(
+          z
+            .object({
+              file: image(),
+              // Written by us. Describe what the screen shows.
+              alt: z.string().trim().min(10).max(200),
+              source: z.url(),
+              license: z.string().trim().min(1),
+            })
+            .strict(),
+        )
+        .max(4)
+        .default([]),
     })
     .strict(),
 });
