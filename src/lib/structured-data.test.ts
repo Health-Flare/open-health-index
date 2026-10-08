@@ -4,11 +4,14 @@ import {
   applicationType,
   breadcrumbList,
   dataset,
+  featureList,
   itemList,
+  ORGANIZATION_ID,
   serialize,
   softwareApplication,
   spdxUrl,
   toolRecord,
+  toolWebPage,
   webSite,
   type ToolEntry,
 } from './structured-data.ts';
@@ -138,6 +141,48 @@ test('records keep YAML keys and a plain date', () => {
   assert.equal(r.reviewed_on, '2026-10-01');
   assert.equal(r.license, 'MIT');
   assert.equal(toolRecord({ id: 'x', data: { ...medtimer.data, reviewed_on: null } }, SITE).reviewed_on, null);
+});
+
+const private_ = tool({
+  privacy: { data_location: 'device', account_required: false, works_offline: true },
+  exports: ['CSV', 'JSON'],
+});
+
+test('featureList carries confirmed privacy facts only', () => {
+  assert.deepEqual(featureList(private_.data), ['Stays on your device', 'No account needed', 'Works offline', 'Export to CSV, JSON']);
+  const unchecked = tool({ privacy: { data_location: 'cloud', account_required: 'unknown', works_offline: 'unknown' } });
+  assert.deepEqual(featureList(unchecked.data), ["On the project's servers"]);
+  const no = tool({ privacy: { data_location: 'mixed', account_required: true, works_offline: false } });
+  assert.deepEqual(featureList(no.data), ['Device, with optional sync']);
+  assert.equal('featureList' in softwareApplication(medtimer, SITE), false);
+  assert.deepEqual(softwareApplication(private_, SITE).featureList, featureList(private_.data));
+});
+
+test('publisher only on our own apps', () => {
+  assert.equal('publisher' in softwareApplication(medtimer, SITE), false);
+  const ours = softwareApplication(tool({ affiliated: true }), SITE);
+  assert.equal((ours.publisher as { '@id': string })['@id'], ORGANIZATION_ID);
+});
+
+test('site and dataset name the same organization', () => {
+  assert.equal((webSite(SITE).publisher as { '@id': string })['@id'], ORGANIZATION_ID);
+  assert.equal((dataset(SITE).creator as { '@id': string })['@id'], ORGANIZATION_ID);
+});
+
+test('tool web page links app, breadcrumb and site, with review date when known', () => {
+  const page = toolWebPage(tool({ reviewed_on: new Date('2026-10-07') }, 'medtimer'), SITE);
+  assert.equal(page['@type'], 'WebPage');
+  assert.equal(page['@id'], 'https://openhealthindex.org/tools/medtimer/');
+  assert.deepEqual(page.mainEntity, { '@id': softwareApplication(medtimer, SITE)['@id'] });
+  assert.deepEqual(page.breadcrumb, { '@id': breadcrumbList(medtimer, SITE)['@id'] });
+  assert.deepEqual(page.isPartOf, { '@id': webSite(SITE)['@id'] });
+  assert.equal(page.lastReviewed, '2026-10-07');
+  assert.equal('lastReviewed' in toolWebPage(tool({ reviewed_on: null }), SITE), false);
+});
+
+test('no medical page types: we describe software, not conditions', () => {
+  const all = serialize([softwareApplication(private_, SITE), toolWebPage(medtimer, SITE), webSite(SITE), dataset(SITE)]);
+  assert.doesNotMatch(all, /Medical/);
 });
 
 test('serialised JSON-LD cannot close its script tag', () => {

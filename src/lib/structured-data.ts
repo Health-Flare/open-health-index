@@ -6,7 +6,7 @@
 // - `unknown` / `null` facts are left out, never guessed.
 // - No aggregateRating or review. We don't rate tools.
 
-import { CATEGORIES, PLATFORMS, type Category } from './labels.ts';
+import { CATEGORIES, DATA_LOCATION, PLATFORMS, type Category } from './labels.ts';
 
 export const SITE_NAME = 'Open Health Index';
 export const SITE_DESCRIPTION =
@@ -29,6 +29,15 @@ export interface ToolData {
     appstore?: string;
   };
   status?: 'active' | 'watchlist' | 'archived';
+  // Optional so callers (and tests) only pass what they have. Absent = not marked up.
+  privacy?: {
+    data_location: keyof typeof DATA_LOCATION;
+    account_required: boolean | 'unknown';
+    works_offline: boolean | 'unknown';
+  };
+  exports?: string[];
+  affiliated?: boolean;
+  reviewed_on?: Date | null;
 }
 
 export interface ToolEntry {
@@ -41,6 +50,39 @@ type JsonLd = Record<string, unknown>;
 const abs = (site: string | URL, path: string) => new URL(path, site).href;
 
 export const toolPath = (id: string) => `/tools/${id}/`;
+
+// The people who run the index. Named the way the site names them ("Part of
+// the Health Flare family"), and given a stable @id so every page points at
+// the same entity.
+export const ORGANIZATION_ID = 'https://healthflare.org/#organization';
+export function organization(): JsonLd {
+  return {
+    '@type': 'Organization',
+    '@id': ORGANIZATION_ID,
+    name: 'Health Flare',
+    url: 'https://healthflare.org',
+    sameAs: ['https://github.com/Health-Flare'],
+  };
+}
+
+const websiteId = (site: string | URL) => `${abs(site, '/')}#website`;
+const appId = (site: string | URL, id: string) => `${abs(site, toolPath(id))}#app`;
+const breadcrumbId = (site: string | URL, id: string) => `${abs(site, toolPath(id))}#breadcrumb`;
+
+/**
+ * Privacy facts as a schema.org featureList. Only confirmed facts: an
+ * `unknown` or a "no" is left out, because a feature list can't say "no".
+ */
+export function featureList(d: ToolData): string[] {
+  const out: string[] = [];
+  if (d.privacy) {
+    out.push(DATA_LOCATION[d.privacy.data_location]);
+    if (d.privacy.account_required === false) out.push('No account needed');
+    if (d.privacy.works_offline === true) out.push('Works offline');
+  }
+  if (d.exports?.length) out.push(`Export to ${d.exports.join(', ')}`);
+  return out;
+}
 export const categoryPath = (category: Category) => `/#${category}`;
 
 // schema.org operatingSystem is free text. Only real OSes go here; "web" and
@@ -78,7 +120,7 @@ export function softwareApplication(tool: ToolEntry, site: string | URL, images:
   const out: JsonLd = {
     '@context': 'https://schema.org',
     '@type': applicationType(d.platforms),
-    '@id': `${url}#app`,
+    '@id': appId(site, tool.id),
     name: d.name,
     description: d.summary,
     url,
@@ -91,6 +133,36 @@ export function softwareApplication(tool: ToolEntry, site: string | URL, images:
   if (os.length) out.operatingSystem = os.join(', ');
   if (d.license) out.license = spdxUrl(d.license);
   if (images.length) out.screenshot = [...images];
+  const features = featureList(d);
+  if (features.length) out.featureList = features;
+  // Only for our own apps, where the page shows the disclosure. We don't know
+  // (or claim) who publishes third-party tools.
+  if (d.affiliated) out.publisher = organization();
+  return out;
+}
+
+/**
+ * Tool page: the page itself. Ties the app, breadcrumb and site together and
+ * carries the human review date, which is what makes a health listing
+ * trustworthy. No MedicalWebPage: these pages describe software, not medical
+ * conditions or treatments.
+ */
+export function toolWebPage(tool: ToolEntry, site: string | URL): JsonLd {
+  const d = tool.data;
+  const url = abs(site, toolPath(tool.id));
+  const out: JsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    '@id': url,
+    url,
+    name: `${d.name} · ${SITE_NAME}`,
+    description: d.summary,
+    inLanguage: 'en',
+    isPartOf: { '@id': websiteId(site) },
+    mainEntity: { '@id': appId(site, tool.id) },
+    breadcrumb: { '@id': breadcrumbId(site, tool.id) },
+  };
+  if (d.reviewed_on) out.lastReviewed = d.reviewed_on.toISOString().slice(0, 10);
   return out;
 }
 
@@ -105,6 +177,7 @@ export function breadcrumbList(tool: ToolEntry, site: string | URL): JsonLd {
   return {
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
+    '@id': breadcrumbId(site, tool.id),
     itemListElement: items.map(([name, item], i) => ({ '@type': 'ListItem', position: i + 1, name, item })),
   };
 }
@@ -114,11 +187,12 @@ export function webSite(site: string | URL): JsonLd {
   return {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
-    '@id': `${abs(site, '/')}#website`,
+    '@id': websiteId(site),
     name: SITE_NAME,
     url: abs(site, '/'),
     description: SITE_DESCRIPTION,
     inLanguage: 'en',
+    publisher: organization(),
   };
 }
 
@@ -152,7 +226,8 @@ export function dataset(site: string | URL): JsonLd {
     license: CC0,
     isAccessibleForFree: true,
     keywords: ['open source', 'health', 'patients', 'privacy', 'self-tracking', 'software'],
-    creator: { '@type': 'Organization', name: 'Health-Flare', url: 'https://github.com/Health-Flare' },
+    creator: organization(),
+    publisher: organization(),
     sameAs: REPO,
     distribution: [
       {

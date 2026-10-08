@@ -4,7 +4,7 @@ import { Image } from 'astro:assets';
 import { screenshotUrls } from '../../lib/screenshots';
 import Base from '../../layouts/Base.astro';
 import { CATEGORIES, PLATFORMS, SETUP, DATA_LOCATION, STATUS } from '../../lib/labels';
-import { breadcrumbList, categoryPath, softwareApplication } from '../../lib/structured-data';
+import { breadcrumbList, categoryPath, softwareApplication, toolWebPage } from '../../lib/structured-data';
 
 export async function getStaticPaths() {
   const tools = await getCollection('tools');
@@ -27,7 +27,11 @@ const links = [
   ['App Store', d.links.appstore],
 ].filter((l): l is [string, string] => Boolean(l[1]));
 const images = await screenshotUrls(d.screenshots, Astro.site!);
-const jsonLd = [softwareApplication(tool, Astro.site!, images), breadcrumbList(tool, Astro.site!)];
+const jsonLd = [
+  toolWebPage(tool, Astro.site!),
+  softwareApplication(tool, Astro.site!, images),
+  breadcrumbList(tool, Astro.site!),
+];
 ---
 <Base title={d.name} description={d.summary} jsonLd={jsonLd}>
   <nav class="crumb" aria-label="Breadcrumb">
