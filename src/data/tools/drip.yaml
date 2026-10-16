@@ -14,3 +14,8 @@ links:
   website: https://bloodyhealth.gitlab.io/
   fdroid: https://f-droid.org/packages/com.drip/
 reviewed_on: null
+screenshots:
+  - file: ../../assets/tools/drip/2403_release_home-1000pxcut.png
+    alt: Drip application home showing today's data for your cycle
+    source: https://dripapp.org/
+    license: GPL-3.0-or-later
