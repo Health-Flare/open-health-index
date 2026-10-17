@@ -7,7 +7,7 @@ privacy:
   data_location: device
   account_required: false
   works_offline: true
-license: AGPL-3.0-only
+license: AGPL-3.0-or-later
 links:
   source: https://codeberg.org/Freeyourgadget/Gadgetbridge
   website: https://gadgetbridge.org/
