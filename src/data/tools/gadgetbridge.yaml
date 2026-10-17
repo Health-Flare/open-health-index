@@ -13,3 +13,16 @@ links:
   website: https://gadgetbridge.org/
   fdroid: https://f-droid.org/packages/nodomain.freeyourgadget.gadgetbridge/
 reviewed_on: null
+screenshots:
+  - file: ../../assets/tools/gadgetbridge/dashboard.png
+    alt: Dashboard for one day with a 24-hour clock ring of activity and sleep, and totals for steps, distance, active time and sleep
+    source: https://codeberg.org/Freeyourgadget/Gadgetbridge/src/branch/master/src/mainline/fastlane/metadata/android/en-US/images/phoneScreenshots/10-Dashboard.png
+    license: AGPL-3.0-or-later
+  - file: ../../assets/tools/gadgetbridge/devices.png
+    alt: Devices tab with a connected Xiaomi Smart Band 7, its battery level, and today's steps, distance and sleep
+    source: https://codeberg.org/Freeyourgadget/Gadgetbridge/src/branch/master/src/mainline/fastlane/metadata/android/en-US/images/phoneScreenshots/11-Devices.png
+    license: AGPL-3.0-or-later
+  - file: ../../assets/tools/gadgetbridge/sleep-day.png
+    alt: Sleep for one night split into deep, light and REM time in a ring chart, with a heart rate graph below
+    source: https://codeberg.org/Freeyourgadget/Gadgetbridge/src/branch/master/src/mainline/fastlane/metadata/android/en-US/images/phoneScreenshots/40-SleepPerDay.png
+    license: AGPL-3.0-or-later
