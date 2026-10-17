@@ -8,14 +8,14 @@ privacy:
   account_required: false
   works_offline: true
 exports: [CSV]
-license: GPL-3.0-only
+license: GPL-3.0-or-later
 links:
   source: https://gitlab.com/bloodyhealth/drip
   website: https://bloodyhealth.gitlab.io/
   fdroid: https://f-droid.org/packages/com.drip/
 reviewed_on: null
 screenshots:
-  - file: ../../assets/tools/drip/2403_release_home-1000pxcut.png
-    alt: Drip application home showing today's data for your cycle
-    source: https://dripapp.org/
+  - file: ../../assets/tools/drip/home.png
+    alt: Home screen showing today's cycle day and phase, when the next period is likely to start, and a button to add today's data
+    source: https://gitlab.com/bloodyhealth/drip/-/blob/main/metadata/en-US/images/phoneScreenshots/2023_sharepic_1_home.png
     license: GPL-3.0-or-later
