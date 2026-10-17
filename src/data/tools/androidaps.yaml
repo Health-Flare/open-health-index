@@ -13,3 +13,17 @@ links:
   website: https://androidaps.readthedocs.io/
 safety_critical: true
 reviewed_on: null
+
+screenshots:
+  - file: ../../assets/tools/androidaps/home.png
+    alt: Home screen with a glucose reading of 100 trending down, insulin and carbs on board, a six-hour glucose and insulin graph, and Insulin, Carbs and Calculator buttons
+    source: https://github.com/openaps/AndroidAPSdocs/blob/master/docs/EN/images/Home_Homescreen.png
+    license: AGPL-3.0-only
+  - file: ../../assets/tools/androidaps/bolus-wizard.png
+    alt: Bolus wizard working out a 1.75 unit dose from a glucose of 125 mg/dl and 20 g of carbs, with the breakdown of each part of the calculation
+    source: https://github.com/openaps/AndroidAPSdocs/blob/master/docs/EN/images/Home2020_BolusWizard_v2.png
+    license: AGPL-3.0-only
+  - file: ../../assets/tools/androidaps/carbs.png
+    alt: Carbs dialog with options to start a temporary target, set a time offset and duration, enter grams of carbs with quick add buttons, and pick the event time
+    source: https://github.com/openaps/AndroidAPSdocs/blob/master/docs/EN/images/Home2020_ButtonCarbs.png
+    license: AGPL-3.0-only
