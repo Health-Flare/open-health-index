@@ -1,0 +1,31 @@
+name: Inner Flare
+summary: A private period and cycle tracker. Data is encrypted on your phone and locked behind your fingerprint, face or passcode.
+category: cycle
+platforms: [android]
+setup: easy
+privacy:
+  data_location: device
+  account_required: false
+  works_offline: true
+exports: [Backup file]
+license: GPL-3.0-or-later
+links:
+  source: https://github.com/Health-Flare/InnerFlare
+  website: https://healthflare.org/inner-flare/
+  play: https://play.google.com/store/apps/details?id=org.healthflare.app.innerflare
+affiliated: true
+reviewed_on: 2026-10-07
+notes: No network access at all. Predictions show what they're based on. The export is a backup for moving to another phone, not a report to share. iPhone version is in App Store review.
+screenshots:
+  - file: ../../assets/tools/inner-flare/dashboard.png
+    alt: Home screen with a button to log today, plus shortcuts to the calendar and cycle insights
+    source: https://github.com/Health-Flare/InnerFlare/tree/main/screenshots/play_store/phone
+    license: GPL-3.0-or-later
+  - file: ../../assets/tools/inner-flare/log-entry.png
+    alt: Logging a day with flow set to medium, cramps and fatigue selected, and a short note
+    source: https://github.com/Health-Flare/InnerFlare/tree/main/screenshots/play_store/phone
+    license: GPL-3.0-or-later
+  - file: ../../assets/tools/inner-flare/insights.png
+    alt: Insights showing average cycle length, how much cycles vary, and estimated next period and fertile window
+    source: https://github.com/Health-Flare/InnerFlare/tree/main/screenshots/play_store/phone
+    license: GPL-3.0-or-later
