@@ -13,3 +13,16 @@ links:
   source: https://github.com/Futsch1/medTimer
   fdroid: https://f-droid.org/packages/com.futsch1.medtimer/
 reviewed_on: null
+screenshots:
+  - file: ../../assets/tools/medtimer/overview.png
+    alt: Overview for a day in August 2025, a timeline of supplement doses such as B12 and Omega 3 marked taken, skipped or due, with a button to log an extra dose
+    source: https://github.com/Futsch1/medTimer/blob/main/fastlane/metadata/android/en-US/images/phoneScreenshots/1.png
+    license: MIT
+  - file: ../../assets/tools/medtimer/medicines.png
+    alt: Medicine list with Omega 3, B12 and Ginseng, each showing pills left, reminder times and tags like Supplements and Energy
+    source: https://github.com/Futsch1/medTimer/blob/main/fastlane/metadata/android/en-US/images/phoneScreenshots/2.png
+    license: MIT
+  - file: ../../assets/tools/medtimer/analysis.png
+    alt: Analysis calendar for August 2025 with days that had doses highlighted, and below it the dose log for August 1 with times and amounts
+    source: https://github.com/Futsch1/medTimer/blob/main/fastlane/metadata/android/en-US/images/phoneScreenshots/8.png
+    license: MIT
