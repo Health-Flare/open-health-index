@@ -12,3 +12,16 @@ license: GPL-3.0-or-later
 links:
   source: https://github.com/iSoron/uhabits
 reviewed_on: null
+screenshots:
+  - file: ../../assets/tools/loop-habit-tracker/habits.png
+    alt: Habit list with ticks and crosses for the last five days, showing habits like Wake up early, Meditate, Run in miles and Read books in pages
+    source: https://github.com/iSoron/uhabits/blob/dev/screenshots/1.png
+    license: GPL-3.0-or-later
+  - file: ../../assets/tools/loop-habit-tracker/habit-overview.png
+    alt: Meditate habit page with its daily question and 7:30 AM reminder, a 73% habit score, and a weekly score line chart
+    source: https://github.com/iSoron/uhabits/blob/dev/screenshots/2.png
+    license: GPL-3.0-or-later
+  - file: ../../assets/tools/loop-habit-tracker/habit-history.png
+    alt: Meditate habit history as a monthly bar chart of days done, above a calendar grid with completed days highlighted
+    source: https://github.com/iSoron/uhabits/blob/dev/screenshots/3.png
+    license: GPL-3.0-or-later
