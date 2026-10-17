@@ -12,3 +12,16 @@ links:
   source: https://github.com/nightscout/Trio
 safety_critical: true
 reviewed_on: null
+screenshots:
+  - file: ../../assets/tools/trio/home.png
+    alt: Main screen with glucose at 97 in a ring, insulin and carbs on board, basal rate, a 6-hour glucose graph with forecast and the bottom tab bar
+    source: https://github.com/nightscout/trio-docs/blob/dev/docs/usage/img/light_mode_sections.png
+    license: AGPL-3.0-only
+  - file: ../../assets/tools/trio/statistics.png
+    alt: Statistics screen in dark mode showing a 3-month ambulatory glucose profile chart, time in range percentages, average glucose, GMI and a range ring
+    source: https://github.com/nightscout/trio-docs/blob/dev/docs/usage/img/statistics.png
+    license: AGPL-3.0-only
+  - file: ../../assets/tools/trio/bolus-calculator.png
+    alt: Bolus calculator details breaking down a recommended 2.30 U bolus from glucose, insulin on board, carbs, glucose trend and a 50 percent factor
+    source: https://github.com/nightscout/trio-docs/blob/dev/docs/usage/img/bolus-calculation.png
+    license: AGPL-3.0-only
