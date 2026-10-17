@@ -12,3 +12,12 @@ links:
   source: https://github.com/NightscoutFoundation/xDrip
 safety_critical: true
 reviewed_on: null
+screenshots:
+  - file: ../../assets/tools/xdrip/home.png
+    alt: Main screen showing a glucose reading of 107 mg/dl with a steady arrow, daily stats, and a graph of the last few hours with logged insulin and carbs
+    source: https://github.com/NightscoutFoundation/xDrip/blob/master/Documentation/images/prefs-show-treatments.png
+    license: GPL-3.0-only
+  - file: ../../assets/tools/xdrip/data-source.png
+    alt: Hardware Data Source picker listing supported readers and transmitters such as Wixel, G5 Transmitter, LimiTTer and LibreAlarm, with LimiTTer selected
+    source: https://github.com/NightscoutFoundation/xDrip/blob/master/Documentation/images/prefs-hardware-data-source-phone.png
+    license: GPL-3.0-only
