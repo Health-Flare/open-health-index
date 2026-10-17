@@ -13,3 +13,16 @@ links:
   website: https://nightscout.github.io/
 safety_critical: true
 reviewed_on: null
+screenshots:
+  - file: ../../assets/tools/nightscout/main-view.png
+    alt: Main view with the current glucose of 157 mg/dl and a rising arrow, a 3-hour chart with predicted readings, and a 48-hour overview below
+    source: https://github.com/nightscout/nightscout.github.io/blob/source/docs/nightscout/img/UseNS00.png
+    license: GPL-2.0-only
+  - file: ../../assets/tools/nightscout/treatments.png
+    alt: Glucose chart marked with carbs in grams and insulin units, next to the current reading of 141 mg/dl with insulin and carbs on board
+    source: https://github.com/nightscout/nightscout.github.io/blob/source/docs/images/nightscout_screenshot_600.png
+    license: GPL-2.0-only
+  - file: ../../assets/tools/nightscout/week-to-week-report.png
+    alt: Week to week report overlaying a week of glucose readings as one coloured line per weekday against a shaded target range
+    source: https://github.com/nightscout/nightscout.github.io/blob/source/docs/nightscout/img/Reports10.png
+    license: GPL-2.0-only
