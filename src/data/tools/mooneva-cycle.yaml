@@ -12,3 +12,16 @@ links:
   source: https://github.com/aradar46/Mooneva-Cycle-Private-Period-Tracker
 reviewed_on: null
 notes: Maintained by one small company.
+screenshots:
+  - file: ../../assets/tools/mooneva-cycle/calendar.png
+    alt: Calendar for September 2026 marking period days 1 to 6 and a fertile window, above the day's log of flow, moods, symptoms, pill and a note
+    source: https://github.com/aradar46/Mooneva-Cycle-Private-Period-Tracker/blob/main/fastlane/metadata/android/en-US/images/phoneScreenshots/01.png
+    license: GPL-3.0-or-later
+  - file: ../../assets/tools/mooneva-cycle/timelines.png
+    alt: Mood, symptom and medication timelines across cycle days 1 to 13, each shaded by how often an item was logged or taken
+    source: https://github.com/aradar46/Mooneva-Cycle-Private-Period-Tracker/blob/main/fastlane/metadata/android/en-US/images/phoneScreenshots/03.png
+    license: GPL-3.0-or-later
+  - file: ../../assets/tools/mooneva-cycle/trends.png
+    alt: Trends in dark mode with a 29-day average cycle, 5-day average period, a cycle length bar chart and the average flow over 5 days
+    source: https://github.com/aradar46/Mooneva-Cycle-Private-Period-Tracker/blob/main/fastlane/metadata/android/en-US/images/phoneScreenshots/04.png
+    license: GPL-3.0-or-later
