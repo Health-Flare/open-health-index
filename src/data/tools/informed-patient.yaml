@@ -1,0 +1,14 @@
+name: Informed Patient
+summary: An AI skill that interviews you about a health question, searches medical research, and writes an evidence summary with questions for your care team.
+category: symptoms
+platforms: [web, desktop]
+setup: medium
+privacy:
+  data_location: cloud
+  account_required: true
+  works_offline: false
+license: CC-BY-4.0
+links:
+  source: https://github.com/DrCatHicks/informed-patient
+reviewed_on: 2026-10-18
+notes: Runs inside Claude, so what you share goes to Anthropic, not to this project. You can also paste it as a prompt into other AI models, including ones on your own computer. A thinking aid, not medical advice.
