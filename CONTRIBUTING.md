@@ -6,7 +6,7 @@ Thanks for helping. The most useful contributions are new listings and correctio
 
 A tool must meet all of these:
 
-1. **Open source.** The source is public under an [OSI-approved license](https://opensource.org/licenses).
+1. **Open source.** The source is public under an [OSI-approved license](https://opensource.org/licenses). AI skills and prompts, which are written instructions rather than code, may instead use an open content license that allows reuse and changes, such as [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/) or [CC0](https://creativecommons.org/publicdomain/zero/1.0/). Licenses with NonCommercial or NoDerivatives terms don't count.
 2. **For people, not institutions.** Useful to an individual managing their own or a family member's health.
 3. **Maintained.** A release or commit in the last 18 months. Otherwise set `status: watchlist` (promising but not ready) or `status: archived` (no longer maintained).
 4. **Actually open.** The parts you need to use it day to day are open. Open-core tools whose usable product is proprietary aren't listed.
