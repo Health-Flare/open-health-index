@@ -1,0 +1,16 @@
+name: Health Record MCP
+summary: Download your full medical record from a US health system that uses Epic, straight to your computer. Optional tools let an AI assistant search it.
+category: records
+platforms: [web, desktop]
+setup: easy
+privacy:
+  data_location: device
+  account_required: false
+  works_offline: false
+exports: [JSON]
+license: MIT
+links:
+  source: https://github.com/jtperry/health-record-mcp
+  website: https://health.circlejtp.me/
+reviewed_on: 2026-10-18
+notes: US only, and only Epic health systems on the website for now. You sign in on your health system's own portal. The AI search runs from the command line on your computer, but any AI model you connect to it sees your record.
