@@ -23,7 +23,7 @@ A tool must meet all of these:
 ```yaml
 name: MedTimer
 summary: One or two sentences, 10–160 characters, in your own words.
-category: medications        # symptoms | mood | medications | cycle | diabetes | records | body | communication | harm-reduction
+category: medications        # symptoms | mood | medications | cycle | diabetes | records | body | fitness | communication | harm-reduction
 platforms: [android]         # android | ios | web | desktop | self-hosted
 setup: easy                  # easy = app store | medium = F-Droid/sideload | hard = build it or run a server
 privacy:
