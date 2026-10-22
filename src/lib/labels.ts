@@ -9,6 +9,7 @@ export const CATEGORIES = {
   diabetes: { label: 'Diabetes', blurb: 'Glucose monitoring and community-built insulin tools.' },
   records: { label: 'Your medical records', blurb: 'Keep your own copy of your health history.' },
   body: { label: 'Body, sleep & food', blurb: 'Wearables, sleep, activity, and what you eat.' },
+  fitness: { label: 'Fitness & training', blurb: 'Log workouts, sets and progress, at the gym or at home.' },
   communication: { label: 'Communication & accessibility', blurb: 'Tools that help you be understood.' },
   'harm-reduction': { label: 'Harm reduction', blurb: 'Track use and check interactions, without judgement.' },
 } as const;

@@ -1,0 +1,34 @@
+name: GymMane
+summary: "A gym log: tap the muscles you want to train on a body map, log sets with a rest timer, and track lifts, body measurements and food."
+category: fitness
+platforms: [android]
+setup: medium
+privacy:
+  data_location: device
+  account_required: false
+  works_offline: true
+exports: [CSV, Backup file, FIT]
+license: GPL-3.0-only
+links:
+  source: https://github.com/InlitX/GymMane
+  website: https://inlitx.github.io/GymMane/
+  fdroid: https://f-droid.org/packages/com.gymmane.app/
+reviewed_on: 2026-10-21
+notes: "No internet permission, so nothing leaves the phone unless you export it. Can read your step count from Health Connect if you allow it. Code is GPL-3.0 with one added term: apps built on it must credit GymMane. iPhone version in progress."
+screenshots:
+  - file: ../../assets/tools/gymmane/body-map.png
+    alt: Train screen, step 1 of 2, Choose your focus, with front and back body diagrams where chest and triceps are selected
+    source: https://github.com/InlitX/GymMane/blob/main/docs/screenshots/03-train.png
+    license: GPL-3.0-only
+  - file: ../../assets/tools/gymmane/session.png
+    alt: Workout in progress on Barbell Bench Press, exercise 1 of 4, with last session's sets, a 150 second rest timer and three sets of reps and weight in kg
+    source: https://github.com/InlitX/GymMane/blob/main/docs/screenshots/04-session.png
+    license: GPL-3.0-only AND CC-BY-SA-4.0
+  - file: ../../assets/tools/gymmane/progress.png
+    alt: Progress screen with 30 day volume up 16 percent, bodyweight 81.4 kg, a workout heatmap with a 4 day streak, totals of 64 sessions and 640 sets, and a muscle map
+    source: https://github.com/InlitX/GymMane/blob/main/docs/screenshots/02-progress.png
+    license: GPL-3.0-only
+  - file: ../../assets/tools/gymmane/today.png
+    alt: Today screen showing a Push routine of 4 exercises with a Start workout button, a week of ticked days, weekly volume, sets and PRs, and an activity grid
+    source: https://github.com/InlitX/GymMane/blob/main/docs/screenshots/01-home.png
+    license: GPL-3.0-only AND CC-BY-SA-4.0
