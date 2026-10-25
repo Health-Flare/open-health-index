@@ -1,0 +1,17 @@
+name: Streak
+summary: "Track habits like stretching, drinking water or avoiding sugar with one tap, and see your streaks, counts and history fill in."
+category: mood
+platforms: [android, desktop]
+setup: medium
+privacy:
+  data_location: device
+  account_required: false
+  works_offline: true
+exports: [JSON backup, Markdown]
+license: GPL-3.0-only
+links:
+  source: https://github.com/InlitX/streak
+  website: https://inlitx.github.io/streak/
+  fdroid: https://f-droid.org/packages/com.streak.app/
+reviewed_on: 2026-10-24
+notes: "The Android app has no internet permission. Step habits can fill in from Health Connect, which it only reads, and only for steps. Desktop builds are for Windows and Linux; iPhone is in progress."
