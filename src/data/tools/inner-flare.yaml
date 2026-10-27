@@ -1,7 +1,7 @@
 name: Inner Flare
 summary: A private period and cycle tracker. Data is encrypted on your phone and locked behind your fingerprint, face or passcode.
 category: cycle
-platforms: [android]
+platforms: [android, ios]
 setup: easy
 privacy:
   data_location: device
@@ -13,9 +13,10 @@ links:
   source: https://github.com/Health-Flare/InnerFlare
   website: https://healthflare.org/inner-flare/
   play: https://play.google.com/store/apps/details?id=org.healthflare.app.innerflare
+  appstore: https://apps.apple.com/app/inner-flare/id6810504084
 affiliated: true
-reviewed_on: 2026-10-07
-notes: No network access at all. Predictions show what they're based on. The export is a backup for moving to another phone, not a report to share. iPhone version is in App Store review.
+reviewed_on: 2026-10-27
+notes: No network access at all. Predictions show what they're based on. The export is a backup for moving to another phone, not a report to share.
 screenshots:
   - file: ../../assets/tools/inner-flare/dashboard.png
     alt: Home screen with a button to log today, plus shortcuts to the calendar and cycle insights
